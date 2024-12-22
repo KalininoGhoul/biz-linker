@@ -27,9 +27,12 @@ RUN docker-php-ext-install pdo \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer global require laravel/installer
-
 COPY docker/app/config/php.ini /etc/php/conf.d/custom.ini
+
+RUN composer install --optimize-autoloader --no-interaction --no-progress && \
+    php artisan migrate --force && \
+    php artisan optimize:clear && \
+    php artisan storage:link
 
 RUN useradd -m web
 
