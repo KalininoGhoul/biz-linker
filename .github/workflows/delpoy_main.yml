@@ -52,5 +52,5 @@ jobs:
           envs: PHP_IMAGE_REF,NGINX_IMAGE_REF
           script: |
             cd ~/biz-linker
-            make login TOKEN=${{ secrets.GITHUB_TOKEN }}
+            make login user=${{ github.actor }} token=${{ secrets.GITHUB_TOKEN }}
             make up
