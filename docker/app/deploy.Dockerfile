@@ -29,14 +29,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY docker/app/config/php.ini /etc/php/conf.d/custom.ini
 
+RUN useradd -m web
+
+COPY --chown=web:web backend/ /var/www/html/
+
 RUN composer install --optimize-autoloader --no-interaction --no-progress && \
     php artisan migrate --force && \
     php artisan optimize:clear && \
     php artisan storage:link
-
-RUN useradd -m web
-
-COPY --chown=web:web backend/ /var/www/html/
 
 USER web
 
