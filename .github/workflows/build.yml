@@ -6,7 +6,7 @@ on:
       - main
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  REPOSITORY: ${{ github.repository }}
 
 jobs:
   build:
@@ -25,17 +25,32 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: Extract metadata (tags, labels) for php
+        id: php-image-meta
+        uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-php
 
-      - name: Build and push Docker image
+      - name: Extract metadata (tags, labels) for nginx
+        id: nginx-image-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-nginx
+
+      - name: Build and push php docker image
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
           file: ./docker/app/deploy.Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.php-image-meta.outputs.tags }}
+          labels: ${{ steps.php-image-meta.outputs.labels }}
+
+      - name: Build and push nginx docker image
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: .
+          file: ./docker/nginx/deploy.Dockerfile
+          push: true
+          tags: ${{ steps.nginx-image-meta.outputs.tags }}
+          labels: ${{ steps.nginx-image-meta.outputs.labels }}
