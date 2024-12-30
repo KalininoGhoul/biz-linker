@@ -6,30 +6,17 @@ services:
       - ./backend:/var/www/html
     depends_on:
       - app
-    networks:
-      - backend
     ports:
       - "8080:80"
-    environment:
-      - NGINX_HOST=${HOST}
 
   app:
     image: biz-linker-php
     volumes:
       - ./backend:/var/www/html
-    networks:
-      - backend
 
   db:
     image: postgres
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_DB=db
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
-
-
-networks:
-  backend:
-    driver: bridge
