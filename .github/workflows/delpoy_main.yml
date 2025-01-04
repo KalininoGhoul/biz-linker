@@ -56,7 +56,7 @@ jobs:
           username: root
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
-          envs: PHP_IMAGE_REF,NGINX_IMAGE_REF
+          envs: PHP_IMAGE_REF,NGINX_IMAGE_REF,PHP_REVERB_IMAGE_REF
           script: |
             cd ~/biz-linker
             make login user=${{ github.actor }} token=${{ secrets.GITHUB_TOKEN }}
