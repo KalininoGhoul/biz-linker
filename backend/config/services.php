@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'dadata' => [
+        'suggestions_api_url' => env('DADATA_SUGGESTIONS_API_URL'),
+        'api_key' => env('DADATA_API_KEY'),
+    ]
+
 ];

@@ -54,3 +54,12 @@ jobs:
           push: true
           tags: ${{ steps.nginx-image-meta.outputs.tags }}
           labels: ${{ steps.nginx-image-meta.outputs.labels }}
+
+      - name: Build and push reverb docker image
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: .
+          file: ./docker/reverb/Dockerfile
+          push: true
+          tags: ${{ steps.php-reverb-image-meta.outputs.tags }}
+          labels: ${{ steps.php-reverb-image-meta.outputs.labels }}

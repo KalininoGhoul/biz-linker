@@ -44,6 +44,7 @@ jobs:
         env:
           PHP_IMAGE_REF: ${{ steps.php-image-meta.outputs.tags }}
           NGINX_IMAGE_REF: ${{ steps.nginx-image-meta.outputs.tags }}
+          PHP_REVERB_IMAGE_REF: ${{ steps.php-reverb-image-meta.outputs.tags }}
         with:
           host: ${{ secrets.HOST }}
           username: root

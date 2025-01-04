@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libicu-dev \
     libonig-dev \
-    libzip-dev
+    libzip-dev \
+    supervisor
 
 RUN docker-php-ext-install pdo \
     pdo_pgsql  \
@@ -25,15 +26,20 @@ RUN docker-php-ext-install pdo \
     zip \
     iconv
 
+RUN pecl install redis && \
+    docker-php-ext-enable redis
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer global require laravel/installer
-
-COPY docker/app/config/php.ini /etc/php/conf.d/custom.ini
+COPY docker/app/config/php.ini $PHP_INI_DIR/php.ini
+COPY docker/app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN useradd -m web
+
+RUN chown -R web:web /var/log
+
 USER web
 
 EXPOSE 9000
 
-ENTRYPOINT ["php-fpm", "-F"]
+ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
