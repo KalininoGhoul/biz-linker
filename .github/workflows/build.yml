@@ -47,6 +47,7 @@ jobs:
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
+          no-cache: true
           file: ./docker/app/deploy.Dockerfile
           push: true
           tags: ${{ steps.php-image-meta.outputs.tags }}
@@ -56,6 +57,7 @@ jobs:
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
+          no-cache: true
           file: ./docker/nginx/deploy.Dockerfile
           push: true
           tags: ${{ steps.nginx-image-meta.outputs.tags }}
@@ -65,6 +67,7 @@ jobs:
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
+          no-cache: true
           file: ./docker/reverb/Dockerfile
           push: true
           tags: ${{ steps.php-reverb-image-meta.outputs.tags }}
