@@ -41,7 +41,7 @@ jobs:
         id: php-reverb-image-meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-nginx
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-reverb
 
       - name: Build and push php docker image
         uses: docker/build-push-action@v5.3.0

@@ -12,9 +12,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libonig-dev \
     libzip-dev \
-    supervisor \
-    libuv1 \
-    libuv1-dev
+    supervisor
 
 RUN docker-php-ext-install pdo \
     pdo_pgsql  \
@@ -30,9 +28,6 @@ RUN docker-php-ext-install pdo \
 
 RUN pecl install redis && \
     docker-php-ext-enable redis
-
-RUN pecl install uv-0.3.0 && \
-    docker-php-ext-enable uv
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

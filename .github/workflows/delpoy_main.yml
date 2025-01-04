@@ -39,6 +39,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-nginx
 
+      - name: Extract metadata (tags, labels) for nginx
+        id: php-reverb-image-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-reverb
+
       - name: Docker compose
         uses: appleboy/ssh-action@v1.2.0
         env:
