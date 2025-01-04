@@ -60,7 +60,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pcntl
 
-RUN pecl install uv-0.3.0 && \
+RUN pecl install -f uv-0.3.0 && \
     docker-php-ext-enable uv
 
 USER web
