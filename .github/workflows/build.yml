@@ -29,19 +29,19 @@ jobs:
         id: php-image-meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-php:latest
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-php
 
       - name: Extract metadata (tags, labels) for nginx
         id: nginx-image-meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-nginx:latest
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-nginx
 
       - name: Extract metadata (tags, labels) for reverb
         id: php-reverb-image-meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-reverb:latest
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}-reverb
 
       - name: Build and push php docker image
         uses: docker/build-push-action@v5.3.0
