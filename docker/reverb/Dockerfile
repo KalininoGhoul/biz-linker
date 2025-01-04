@@ -36,7 +36,7 @@ COPY docker/app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN useradd -m web
 
-COPY --chown=web:web backend/ /var/www/html/
+COPY --chown=web:web ./backend/ /var/www/html/
 RUN chown -R web:web /var/log
 
 USER web
@@ -60,7 +60,7 @@ RUN pecl install -f uv-0.3.0 && \
 
 USER web
 
-COPY docker/reverb/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./docker/reverb/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 8080
 
