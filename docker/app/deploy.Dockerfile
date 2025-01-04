@@ -44,12 +44,6 @@ RUN useradd -m web
 COPY --chown=web:web backend/ /var/www/html/
 RUN chown -R web:web /var/log
 
-RUN composer install --optimize-autoloader --no-interaction --no-progress && \
-    php artisan migrate --force && \
-    php artisan optimize:clear && \
-    php artisan storage:link && \
-    php artisan db:seed
-
 USER web
 
 EXPOSE 9000
