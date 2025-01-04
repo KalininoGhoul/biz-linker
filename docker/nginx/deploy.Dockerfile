@@ -1,3 +1,3 @@
 FROM nginx
 
-COPY docker/nginx/templates/default.conf.template /etc/nginx/templates/default.conf.template
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf

@@ -2,17 +2,24 @@ services:
   nginx:
     image: nginx
     volumes:
-      - ./docker/nginx/templates:/etc/nginx/templates
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./backend:/var/www/html
     depends_on:
       - app
     ports:
-      - "8080:80"
+      - 8080:80
 
   app:
     image: biz-linker-php
     volumes:
       - ./backend:/var/www/html
+
+  reverb:
+    image: biz-linker-reverb-php
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - 8081:8080
 
   db:
     image: postgres
@@ -24,6 +31,11 @@ services:
       - POSTGRES_DB=db
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
 
 volumes:
   db:

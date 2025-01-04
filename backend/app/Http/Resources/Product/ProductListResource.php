@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Resources\Product;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @mixin Product
+ */
+class ProductListResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'image' => fileUrl($this->image),
+            'price' => $this->price,
+            'count' => $this->count,
+        ];
+    }
+}
