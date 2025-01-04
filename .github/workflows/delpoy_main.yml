@@ -61,4 +61,5 @@ jobs:
             cd ~/biz-linker
             make login user=${{ github.actor }} token=${{ secrets.GITHUB_TOKEN }}
             make exec command="composer install --optimize-autoloader --no-interaction --no-progress && php artisan migrate --force && php artisan optimize:clear && php artisan storage:link"
+            make pull
             make up
