@@ -9,6 +9,7 @@ use App\Models\Organization;
 use App\Models\WishlistProduct;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
@@ -54,5 +55,15 @@ class WishlistController extends Controller
         $products = WishlistProduct::query()->findMany($request->validated('products.*.id'));
 
         return WishlistProductListResource::collection($products);
+    }
+
+    /** Удаление */
+    public function delete(WishlistProduct $product): JsonResponse
+    {
+        $this->organization->wishlistProducts()->findOrFail($product->id)->delete();
+
+        return new JsonResponse([
+            'status' => true,
+        ]);
     }
 }
