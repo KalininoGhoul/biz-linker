@@ -9,6 +9,7 @@ use App\Models\Chat;
 use App\Models\Organization;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
@@ -64,5 +65,15 @@ class ChatController extends Controller
     public function show(Chat $chat): ChatResource
     {
         return new ChatResource($chat);
+    }
+
+    /** Удаление */
+    public function delete(Chat $chat): JsonResponse
+    {
+        $this->organization->chats()->findOrFail($chat->id)->delete();
+
+        return new JsonResponse([
+            'status' => true
+        ]);
     }
 }

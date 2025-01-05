@@ -19,10 +19,12 @@ Route::prefix('my')->middleware('auth:sanctum')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
     Route::post('/products/{product}', [ProductController::class, 'update']);
+    Route::delete('/products/{product}', [ProductController::class, 'delete']);
 
     Route::get('/wishlist', [WishlistController::class, 'index']);
     Route::post('/wishlist', [WishlistController::class, 'store']);
     Route::put('/wishlist', [WishlistController::class, 'update']);
+    Route::delete('/wishlist/{product}', [WishlistController::class, 'delete']);
 });
 
 Route::prefix('organizations')->middleware('auth:sanctum')->group(function () {
@@ -44,5 +46,6 @@ Route::prefix('chats')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [ChatController::class, 'index']);
     Route::post('/', [ChatController::class, 'store']);
     Route::get('/{chat}', [ChatController::class, 'show']);
+    Route::delete('/{chat}', [ChatController::class, 'delete']);
     Route::post('/{chat}/messages/send', [MessageController::class, 'sendMessage']);
 });

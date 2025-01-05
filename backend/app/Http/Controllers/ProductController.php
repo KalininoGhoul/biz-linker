@@ -8,6 +8,7 @@ use App\Http\Resources\Product\ProductResource;
 use App\Models\Organization;
 use App\Models\Product;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @tags Товары
@@ -43,5 +44,18 @@ class ProductController extends Controller
     public function show(Product $product): ProductResource
     {
         return new ProductResource($product);
+    }
+
+    /** Удаление */
+    public function delete(Product $product, AuthManager $authManager): JsonResponse
+    {
+        /** @var Organization $organization */
+        $organization = $authManager->user();
+
+        $organization->products()->findOrFail($product->id)->delete();
+
+        return new JsonResponse([
+            'status' => true,
+        ]);
     }
 }

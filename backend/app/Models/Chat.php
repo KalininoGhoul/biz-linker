@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
+ * 
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat newQuery()
@@ -18,10 +19,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $members
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messages
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $lastMessage
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat withoutTrashed()
  * @mixin \Eloquent
  */
 class Chat extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'chats';
 
     protected $guarded = ['id'];

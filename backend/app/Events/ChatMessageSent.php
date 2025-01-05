@@ -28,7 +28,7 @@ class ChatMessageSent implements ShouldBroadcast
             ->whereNot('organization_id', auth()->id())
             ->get()
             ->map(fn(Organization $organization) =>
-                new PrivateChannel(sprintf('chats.%s.%s', $this->message->chat_id, $organization->id))
+                new PrivateChannel(sprintf('chats.%s', $organization->id))
             )
             ->toArray();
     }
@@ -36,6 +36,7 @@ class ChatMessageSent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
+            'chat_id' => $this->message->chat_id,
             'sender' => [
                 'id' => $this->message->sender->id,
                 'name' => $this->message->sender->name,

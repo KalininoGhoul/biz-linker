@@ -30,6 +30,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutRole($roles, $guard = null)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chat> $chats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
  * @mixin \Eloquent
  */
 class Organization extends Authenticatable
@@ -45,6 +46,11 @@ class Organization extends Authenticatable
     protected $casts = [
         'password' => 'hashed'
     ];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'organization_id');
+    }
 
     public function wishlistProducts(): HasMany
     {
