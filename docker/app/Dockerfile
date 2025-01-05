@@ -24,7 +24,8 @@ RUN docker-php-ext-install pdo \
     opcache \
     phar \
     zip \
-    iconv
+    iconv \
+    bcmath
 
 RUN pecl install redis && \
     docker-php-ext-enable redis
