@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\RolesEnum;
 use App\Http\Requests\Auth\OrganizationLoginRequest;
 use App\Http\Requests\Auth\OrganizationRegisterRequest;
 use App\Http\Resources\Organization\OrganizationResource;
@@ -25,9 +24,12 @@ class AuthController extends Controller
             'name' => $request->organizationDto->name,
             'inn' => $request->organizationDto->inn,
             'password' => $request->validated('password'),
+            'ogrn' => $request->organizationDto->ogrn,
+            'kpp' => $request->organizationDto->kpp,
+            'okpo' => $request->organizationDto->okpo,
+            'type' => $request->organizationDto->type,
+            'address' => $request->organizationDto->address,
         ]);
-
-        $organization->assignRole(RolesEnum::ADMIN);
 
         return new JsonResponse([
             'status' => true,

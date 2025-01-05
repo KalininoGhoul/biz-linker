@@ -2,6 +2,7 @@
 
 namespace App\Services\Dadata;
 
+use App\Enums\OrganizationType;
 use App\Services\Organization\Dto\OrganizationDto;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
@@ -28,6 +29,8 @@ class DadataClient
             ogrn: $organization['data']['ogrn'],
             kpp: $organization['data']['kpp'],
             okpo: $organization['data']['okpo'],
+            type: OrganizationType::from($organization['data']['type']),
+            address: $organization['data']['address']['data']['source'],
             invalid: $organization['data']['invalid'] ?? false,
         ));
     }

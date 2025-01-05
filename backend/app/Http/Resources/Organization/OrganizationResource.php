@@ -17,6 +17,11 @@ class OrganizationResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'inn' => $this->inn,
+            'kpp' => $this->kpp,
+            'ogrn' => $this->ogrn,
+            'okpo' => $this->okpo,
+            'address' => $this->address,
+            'type' => $this->type->translate(),
         ];
     }
 }

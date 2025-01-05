@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\OrganizationType;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 /**
  * 
@@ -31,11 +32,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutRole($roles, $guard = null)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chat> $chats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
+ * @property string|null $ogrn
+ * @property string|null $kpp
+ * @property string|null $okpo
+ * @property string|null $address
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutTrashed()
+ * @property OrganizationType|null $type
  * @mixin \Eloquent
  */
 class Organization extends Authenticatable
 {
-    use HasApiTokens, HasRoles;
+    use HasApiTokens, SoftDeletes;
 
     protected $table = 'organizations';
 
@@ -44,7 +53,8 @@ class Organization extends Authenticatable
     protected string $guard_name = 'web';
 
     protected $casts = [
-        'password' => 'hashed'
+        'password' => 'hashed',
+        'type' => OrganizationType::class,
     ];
 
     public function products(): HasMany
