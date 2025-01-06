@@ -11,11 +11,9 @@ class WishlistUpdateRequest extends ProductWithFileUrlRequest
     public function rules(): array
     {
         return [
-            'products' => ['required', 'array'],
-            'products.*.id' => ['required', Rule::exists(WishlistProduct::class, 'id')],
-            'products.*.name' => ['sometimes', 'required'],
-            'products.*.count' => ['sometimes', 'required', 'integer', 'min:1'],
-            'products.*.price' => ['sometimes', 'required', 'numeric', 'min:0'],
+            'name' => ['sometimes', 'required'],
+            'count' => ['sometimes', 'required', 'integer', 'min:1'],
+            'price' => ['sometimes', 'required', 'numeric', 'min:0'],
         ];
     }
 }

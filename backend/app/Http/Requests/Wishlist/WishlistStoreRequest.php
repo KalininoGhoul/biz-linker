@@ -9,10 +9,9 @@ class WishlistStoreRequest extends ProductWithFileUrlRequest
     public function rules(): array
     {
         return [
-            'products' => ['required', 'array'],
-            'products.*.name' => ['required'],
-            'products.*.count' => ['required', 'integer', 'min:1'],
-            'products.*.price' => ['required', 'numeric', 'min:0'],
+            'name' => ['required'],
+            'count' => ['required', 'integer', 'min:1'],
+            'price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

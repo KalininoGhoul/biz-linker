@@ -23,7 +23,7 @@ Route::prefix('my')->middleware('auth:sanctum')->group(function () {
 
     Route::get('/wishlist', [WishlistController::class, 'index']);
     Route::post('/wishlist', [WishlistController::class, 'store']);
-    Route::put('/wishlist', [WishlistController::class, 'update']);
+    Route::put('/wishlist/{product}', [WishlistController::class, 'update']);
     Route::delete('/wishlist/{product}', [WishlistController::class, 'delete']);
 });
 

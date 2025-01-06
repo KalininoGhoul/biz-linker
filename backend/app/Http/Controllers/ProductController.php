@@ -30,14 +30,18 @@ class ProductController extends Controller
     }
 
     /** Обновить */
-    public function update(ProductUpdateRequest $request, Product $product): ProductResource
+    public function update(ProductUpdateRequest $request, Product $product, AuthManager $authManager): ProductResource
     {
-        $product->update(array_merge(
-            $request->validated(),
-            ['image' => $request->downloadedImagePath]
-        ));
+        /** @var Organization $organization */
+        $organization = $authManager->user();
 
-        return new ProductResource($product);
+        $organization->products()->findOrFail($product->id)->update($request->validated());
+
+        if ($request->has('image') || $request->hasFile('image_url')) {
+            $organization->products()->findOrFail($product->id)->update(['image' => $request->downloadedImagePath]);
+        }
+
+        return new ProductResource($product->refresh());
     }
 
     /** Данные о товаре */

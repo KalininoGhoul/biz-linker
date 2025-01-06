@@ -34,27 +34,22 @@ class WishlistController extends Controller
     }
 
     /** Добавить в список */
-    public function store(WishlistStoreRequest $request): AnonymousResourceCollection
+    public function store(WishlistStoreRequest $request): WishlistProductListResource
     {
-        $products = collect($request->validated('products'))
-            ->map(fn(array $product) => $this->organization->wishlistProducts()->create($product));
+        $product = $this->organization->wishlistProducts()->create($request->validated());
 
-        return WishlistProductListResource::collection($products);
+        return new WishlistProductListResource($product);
     }
 
     /** Обновить список */
-    public function update(WishlistUpdateRequest $request): AnonymousResourceCollection
+    public function update(WishlistUpdateRequest $request, WishlistProduct $product): WishlistProductListResource
     {
-        collect($request->validated('products'))
-            ->each(fn(array $product) => $this->organization
-                ->wishlistProducts()
-                ->find($product['id'])
-                ->update($product)
-            );
+        $this->organization
+            ->wishlistProducts()
+            ->findOrFail($product->id)
+            ->update($request->validated());
 
-        $products = WishlistProduct::query()->findMany($request->validated('products.*.id'));
-
-        return WishlistProductListResource::collection($products);
+        return new WishlistProductListResource($product->refresh());
     }
 
     /** Удаление */
