@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Organization;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Organization\OrganizationIndexRequest;
 use App\Http\Requests\Organization\OrganizationProductsRequest;
-use App\Http\Resources\Organization\OrganizationListResource;
-use App\Http\Resources\Organization\OrganizationResource;
 use App\Http\Resources\Product\ProductListResource;
 use App\Models\Organization;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
