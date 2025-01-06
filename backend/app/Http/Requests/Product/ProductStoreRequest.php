@@ -13,8 +13,8 @@ class ProductStoreRequest extends ProductWithFileUrlRequest
             'name' => ['required', 'string'],
             'count' => ['required', 'integer', 'min:1'],
             'description' => ['required', 'string'],
-            'image' => ['required_without:image_url', File::image()->max($this->maxFileSize)],
-            'image_url' => ['required_without:image', 'url:http,https'],
+            'image' => ['sometimes', File::image()->max($this->maxFileSize)],
+            'image_url' => ['sometimes', 'url:http,https'],
             'price' => ['required', 'numeric', 'min:1'],
         ];
     }
