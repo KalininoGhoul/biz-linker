@@ -46,8 +46,8 @@ class ChatMessageSent implements ShouldBroadcast
                 'message' => $this->message->message,
                 'pinned' => $this->message->pinned,
                 'status' => $this->message->status,
+                'date' => $this->message->created_at,
             ],
-            'date' => $this->message->created_at,
         ];
     }
 }
