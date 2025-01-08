@@ -20,6 +20,7 @@ class InvoiceListResource extends JsonResource
             'price_sum' => $this->productPriceSum(),
             'supplier' => new OrganizationResource($this->supplier),
             'customer' => new OrganizationResource($this->customer),
+            'date' => $this->created_at,
         ];
     }
 }
