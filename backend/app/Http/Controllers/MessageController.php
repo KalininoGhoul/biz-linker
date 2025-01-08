@@ -11,6 +11,7 @@ use App\Http\Requests\Chat\MessageDeliveredRequest;
 use App\Http\Requests\Chat\PinMessageRequest;
 use App\Http\Requests\Chat\SendMessageRequest;
 use App\Http\Requests\Chat\UnpinMessageRequest;
+use App\Http\Resources\Chat\MessageListResource;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Organization;
@@ -34,7 +35,7 @@ class MessageController extends Controller
     }
 
     /** Отправить сообщение */
-    public function sendMessage(SendMessageRequest $request, Chat $chat): JsonResponse
+    public function sendMessage(SendMessageRequest $request, Chat $chat): MessageListResource
     {
         /** @var Message $message */
         $message = $chat->messages()->create([
@@ -45,9 +46,7 @@ class MessageController extends Controller
 
         broadcast(new ChatMessageSent($message))->toOthers();
 
-        return new JsonResponse([
-            'message_id' => $message->id,
-        ]);
+        return new MessageListResource($message);
     }
 
     /** Закрепить сообщение */
