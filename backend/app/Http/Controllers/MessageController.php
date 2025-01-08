@@ -42,6 +42,7 @@ class MessageController extends Controller
             'sender_id' => $this->organization->id,
             'message' => $request->validated('message'),
             'status' => MessageStatus::SENT,
+            'pinned' => false,
         ]);
 
         broadcast(new ChatMessageSent($message))->toOthers();
