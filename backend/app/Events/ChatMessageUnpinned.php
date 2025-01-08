@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatMessageSent implements ShouldBroadcast
+class ChatMessageUnpinned implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -37,17 +37,7 @@ class ChatMessageSent implements ShouldBroadcast
     {
         return [
             'chat_id' => $this->message->chat_id,
-            'sender' => [
-                'id' => $this->message->sender->id,
-                'name' => $this->message->sender->name,
-            ],
-            'message' => [
-                'id' => $this->message->id,
-                'message' => $this->message->message,
-                'pinned' => $this->message->pinned,
-                'status' => $this->message->status,
-            ],
-            'date' => $this->message->created_at,
+            'message_id' => $this->message->id,
         ];
     }
 }

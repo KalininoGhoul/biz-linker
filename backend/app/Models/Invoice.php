@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Invoice withoutTrashed()
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static Builder<static>|Invoice forOrganization(\App\Models\Organization $organization)
  * @mixin \Eloquent
  */
 class Invoice extends Model
@@ -34,6 +36,13 @@ class Invoice extends Model
     protected $table = 'invoices';
 
     protected $guarded = ['id'];
+
+    public function resolveRouteBinding($value, $field = null): self
+    {
+        return self::query()
+            ->forOrganization(auth()->user())
+            ->findOrFail($value);
+    }
 
     public function supplier(): BelongsTo
     {
@@ -55,5 +64,14 @@ class Invoice extends Model
     public function productPriceSum(): float
     {
         return $this->products->sum(fn(Product $product) => $product->price * $product->pivot->count);
+    }
+
+    public function scopeForOrganization(Builder $builder, Organization $organization): Builder
+    {
+        return $builder->where(fn($q) => $q
+            ->where('customer_id', $organization->id)
+            ->orWhere('supplier_id', $organization->id)
+        )
+            ->orderByDesc('id');
     }
 }

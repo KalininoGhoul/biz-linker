@@ -9,6 +9,11 @@ use Illuminate\Validation\Rule;
 
 class InvoiceStoreRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return in_array(auth()->id(), $this->only(['supplier_id', 'customer_id']));
+    }
+
     public function rules(): array
     {
         return [

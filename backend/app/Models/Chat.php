@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $pinnedMessages
  * @mixin \Eloquent
  */
 class Chat extends Model
@@ -33,14 +34,27 @@ class Chat extends Model
 
     protected $guarded = ['id'];
 
+    public function resolveRouteBinding($value, $field = null): self
+    {
+        /** @var Organization $organization */
+        $organization = auth()->user();
+
+        return $organization->chats()->findOrFail($value);
+    }
+
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class, 'chat_id')->orderBy('id');
+        return $this->hasMany(Message::class, 'chat_id');
+    }
+
+    public function pinnedMessages(): HasMany
+    {
+        return $this->messages()->where('pinned', true);
     }
 
     public function lastMessage(): HasMany
     {
-        return $this->messages()->latest('id');
+        return $this->messages()->latest('id')->take(1);
     }
 
     public function members(): BelongsToMany

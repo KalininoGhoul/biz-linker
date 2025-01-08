@@ -17,6 +17,7 @@ class ChatResource extends JsonResource
             'id' => $this->id,
             'my_id' => auth()->id(),
             'members' => ChatMemberListResource::collection($this->members),
+            'pinned_messages' => MessageListResource::collection($this->pinnedMessages),
             'messages' => MessageListResource::collection($this->messages),
         ];
     }

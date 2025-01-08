@@ -17,6 +17,7 @@ class MessageListResource extends JsonResource
             'id' => $this->id,
             'sender_id' => $this->sender_id,
             'message' => $this->message,
+            'pinned' => $this->pinned,
         ];
     }
 }

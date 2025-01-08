@@ -15,6 +15,7 @@ class ChatListResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'created_at' => $this->created_at,
             'receiver' => [
                 'id' => $this->members->first()->id,
                 'name' => $this->members->first()->name,
@@ -25,6 +26,7 @@ class ChatListResource extends JsonResource
                     'name' => $this->lastMessage->first()->sender->name,
                 ],
                 'message' => $this->lastMessage->first()->message,
+                'date' => $this->lastMessage->first()->created_at,
             ] : null,
         ];
     }

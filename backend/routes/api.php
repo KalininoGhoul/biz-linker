@@ -35,6 +35,7 @@ Route::prefix('organizations')->middleware('auth:sanctum')->group(function () {
 });
 
 Route::prefix('invoices')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [InvoiceController::class, 'index']);
     Route::post('/', [InvoiceController::class, 'store']);
     Route::put('/{invoice}/products', [InvoiceController::class, 'addProducts']);
     Route::delete('/{invoice}/products', [InvoiceController::class, 'removeProduct']);
@@ -48,4 +49,7 @@ Route::prefix('chats')->middleware('auth:sanctum')->group(function () {
     Route::get('/{chat}', [ChatController::class, 'show']);
     Route::delete('/{chat}', [ChatController::class, 'delete']);
     Route::post('/{chat}/messages/send', [MessageController::class, 'sendMessage']);
+    Route::post('/{chat}/messages/pin', [MessageController::class, 'pinMessage']);
+    Route::post('/{chat}/messages/unpin', [MessageController::class, 'unpinMessage']);
+    Route::post('/{chat}/messages/delivered', [MessageController::class, 'delivered']);
 });
