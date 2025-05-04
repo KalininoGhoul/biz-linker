@@ -24,7 +24,8 @@ RUN docker-php-ext-install pdo \
     opcache \
     phar \
     zip \
-    iconv
+    iconv \
+    bcmath
 
 RUN pecl install redis && \
     docker-php-ext-enable redis
@@ -33,14 +34,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY docker/app/config/php.ini $PHP_INI_DIR/php.ini
 COPY docker/app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/app/config/entrypoint.sh /entrypoint.sh
 
 RUN useradd -m web
 
-COPY --chown=web:web ./backend/ /var/www/html/
 RUN chown -R web:web /var/log
 
 USER web
 
 EXPOSE 9000
 
-ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["/entrypoint.sh"]
