@@ -58,8 +58,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           envs: PHP_IMAGE_REF,NGINX_IMAGE_REF,PHP_REVERB_IMAGE_REF
           script: |
-            cd ~/biz-linker
-            make login user=${{ github.actor }} token=${{ secrets.GITHUB_TOKEN }}
-            make exec command="composer install --optimize-autoloader --no-interaction --no-progress && php artisan migrate --force && php artisan optimize:clear && php artisan storage:link"
+            cd ~/bizlinker
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             make pull
             make up
