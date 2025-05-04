@@ -24,29 +24,17 @@ RUN docker-php-ext-install pdo \
     opcache \
     phar \
     zip \
-    iconv
+    iconv \
+    bcmath
 
 RUN pecl install redis && \
     docker-php-ext-enable redis
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 COPY docker/app/config/php.ini $PHP_INI_DIR/php.ini
-COPY docker/app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN useradd -m web
 
 RUN chown -R web:web /var/log
-
-USER web
-
-EXPOSE 9000
-
-ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
-WORKDIR /var/www/html/
-
-USER root
 
 RUN apt-get update && apt-get install -y \
     libuv1 \
