@@ -1,3 +1,5 @@
+#!/bin/bash
+
 composer install --optimize-autoloader --no-interaction --no-progress
 
 php artisan migrate --force
