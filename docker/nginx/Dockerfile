@@ -9,8 +9,8 @@ RUN python3 -m venv /opt/certbot/
 RUN /opt/certbot/bin/pip install --upgrade pip
 RUN /opt/certbot/bin/pip install certbot certbot-nginx
 
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+
 RUN /opt/certbot/bin/certbot --nginx --email "gaal.04@mail.ru" -d "bizlinker.tw1.ru" --cert-name=certfolder --key-type rsa --agree-tos
 
 RUN echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | tee -a /etc/crontab > /dev/null
-
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
