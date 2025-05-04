@@ -1,11 +1,16 @@
 FROM nginx
 
 RUN apt-get update && apt-get install -y \
-    snapd
+    python3  \
+    python3-venv  \
+    libaugeas0
 
-RUN snap install snapd
+RUN python3 -m venv /opt/certbot/
+RUN /opt/certbot/bin/pip install --upgrade pip
+RUN /opt/certbot/bin/pip install certbot certbot-nginx
 
-RUN snap install --classic certbot
-RUN certbot --nginx
+RUN /opt/certbot/bin/certbot --nginx
+
+RUN echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | tee -a /etc/crontab > /dev/null
 
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
