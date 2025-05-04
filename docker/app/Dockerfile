@@ -39,6 +39,7 @@ RUN useradd -m web
 
 COPY --chown=web:web ./backend/ /var/www/html/
 RUN chown -R web:web /var/log
+RUN chown -R web:web /entrypoint.sh && chmod u+x /entrypoint.sh
 
 USER web
 

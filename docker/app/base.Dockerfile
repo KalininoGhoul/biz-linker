@@ -39,6 +39,7 @@ COPY docker/app/config/entrypoint.sh /entrypoint.sh
 RUN useradd -m web
 
 RUN chown -R web:web /var/log
+RUN chown -R web:web /entrypoint.sh && chmod u+x /entrypoint.sh
 
 USER web
 
