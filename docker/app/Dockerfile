@@ -27,7 +27,8 @@ RUN docker-php-ext-install pdo \
     phar \
     zip \
     iconv \
-    bcmath
+    bcmath \
+    pcntl 
 
 RUN pecl install redis uv-0.3.0 && \
     docker-php-ext-enable redis uv
