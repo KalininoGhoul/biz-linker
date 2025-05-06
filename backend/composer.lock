@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f26b6a3514b5ef5190a6b69b6d0f272",
+    "content-hash": "486faf25b9042c8d1f50505403d393a3",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -546,20 +546,20 @@
         },
         {
             "name": "dedoc/scramble",
-            "version": "v0.11.31",
+            "version": "v0.12.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dedoc/scramble.git",
-                "reference": "bd7aeda823765565adc79bbb1a2b7d066b77c318"
+                "reference": "f6516eb82c7c86e57e2cfaead4a05b900e4b5ecc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dedoc/scramble/zipball/bd7aeda823765565adc79bbb1a2b7d066b77c318",
-                "reference": "bd7aeda823765565adc79bbb1a2b7d066b77c318",
+                "url": "https://api.github.com/repos/dedoc/scramble/zipball/f6516eb82c7c86e57e2cfaead4a05b900e4b5ecc",
+                "reference": "f6516eb82c7c86e57e2cfaead4a05b900e4b5ecc",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
                 "myclabs/deep-copy": "^1.12",
                 "nikic/php-parser": "^5.0",
                 "php": "^8.1",
@@ -569,10 +569,11 @@
             "require-dev": {
                 "laravel/pint": "^v1.1.0",
                 "nunomaduro/collision": "^7.0|^8.0",
-                "orchestra/testbench": "^8.0|^9.0",
-                "pestphp/pest": "^2.34",
-                "pestphp/pest-plugin-laravel": "^2.3",
-                "phpunit/phpunit": "^10.5",
+                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "pestphp/pest": "^2.34|^3.7",
+                "pestphp/pest-plugin-laravel": "^2.3|^3.1",
+                "phpunit/phpunit": "^10.5|^11.5.3",
+                "spatie/laravel-permission": "^6.10",
                 "spatie/pest-plugin-snapshots": "^2.1"
             },
             "type": "library",
@@ -609,7 +610,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dedoc/scramble/issues",
-                "source": "https://github.com/dedoc/scramble/tree/v0.11.31"
+                "source": "https://github.com/dedoc/scramble/tree/v0.12.19"
             },
             "funding": [
                 {
@@ -617,7 +618,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-20T10:12:41+00:00"
+            "time": "2025-04-23T09:41:53+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
