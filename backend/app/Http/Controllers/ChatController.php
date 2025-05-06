@@ -34,7 +34,7 @@ class ChatController extends Controller
             $this->organization
                 ->chats()
                 ->with([
-                    'members' => fn($q) => $q->whereNot('organization_id', $this->organization->id),
+                    'members',
                     'lastMessage.sender'
                 ])
                 ->get()
