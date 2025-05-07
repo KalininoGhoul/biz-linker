@@ -76,8 +76,8 @@ return [
     */
 
     'queue' => [
-        'connection' => env('TELESCOPE_QUEUE_CONNECTION', null),
-        'queue' => env('TELESCOPE_QUEUE', null),
+        'connection' => env('TELESCOPE_QUEUE_CONNECTION', 'redis'),
+        'queue' => env('TELESCOPE_QUEUE', 'telescope'),
         'delay' => env('TELESCOPE_QUEUE_DELAY', 10),
     ],
 
@@ -109,7 +109,7 @@ return [
     */
 
     'only_paths' => [
-        // 'api/*'
+        'api/*'
     ],
 
     'ignore_paths' => [
@@ -171,7 +171,7 @@ return [
 
         Watchers\LogWatcher::class => [
             'enabled' => env('TELESCOPE_LOG_WATCHER', true),
-            'level' => 'error',
+            'level' => 'debug',
         ],
 
         Watchers\MailWatcher::class => env('TELESCOPE_MAIL_WATCHER', true),
