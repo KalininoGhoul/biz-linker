@@ -109,7 +109,8 @@ return [
     */
 
     'only_paths' => [
-        'api/*'
+        'api/*',
+        'app/*',
     ],
 
     'ignore_paths' => [
@@ -155,7 +156,9 @@ return [
 
         Watchers\EventWatcher::class => [
             'enabled' => env('TELESCOPE_EVENT_WATCHER', true),
-            'ignore' => [],
+            'ignore' => [
+                Laravel\Sanctum\Events\TokenAuthenticated::class,
+            ],
         ],
 
         Watchers\ExceptionWatcher::class => env('TELESCOPE_EXCEPTION_WATCHER', true),
