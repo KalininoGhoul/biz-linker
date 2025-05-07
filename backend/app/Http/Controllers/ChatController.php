@@ -7,6 +7,7 @@ use App\Http\Resources\Chat\ChatListResource;
 use App\Http\Resources\Chat\ChatResource;
 use App\Models\Chat;
 use App\Models\Organization;
+use App\Queries\ChatQuery;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
@@ -34,7 +35,7 @@ class ChatController extends Controller
             $this->organization
                 ->chats()
                 ->with([
-                    'members',
+                    'members' => fn($q) => $q->whereNot('organization_id', auth()->id()),
                     'lastMessage.sender'
                 ])
                 ->get()
@@ -42,23 +43,12 @@ class ChatController extends Controller
     }
 
     /** Создать чат. Если такой чат уже существует, то вернется он  */
-    public function store(ChatStoreRequest $request): ChatListResource
+    public function store(ChatStoreRequest $request, ChatQuery $chatQuery): ChatListResource
     {
-        $chat = Chat::query()
-            ->whereRelation('members', 'organizations.id', $request->validated('receiver_id'))
-            ->whereRelation('members', 'organizations.id', $this->organization->id)
-            ->first();
-
-        if (is_null($chat)) {
-            $chat = Chat::query()->create();
-
-            $chat->members()->attach([
-                $request->validated('receiver_id'),
-                $this->organization->id
-            ]);
-        }
-
-        return new ChatListResource($chat);
+        return new ChatListResource($chatQuery->getChatForOrganization(
+            organization: $this->organization,
+            receiverId: $request->validated('receiver_id')
+        ));
     }
 
     /** Данные о чате */

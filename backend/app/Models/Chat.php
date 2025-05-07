@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Chat newQuery()
@@ -59,6 +59,7 @@ class Chat extends Model
 
     public function members(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class, 'chat_organization', 'chat_id', 'organization_id');
+        return $this->belongsToMany(Organization::class, 'chat_organization', 'chat_id', 'organization_id')
+            ->distinct('organization_id');
     }
 }
