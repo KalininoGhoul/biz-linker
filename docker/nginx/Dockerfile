@@ -14,4 +14,4 @@ COPY docker/nginx/nginx-ci.conf /etc/nginx/nginx.conf
 COPY backend/public /var/www/html/public
 RUN ln -sf /var/www/html/storage/app/public /var/www/html/public/storage
 
-RUN (crontab -l && echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && /opt/certbot/bin/certbot renew -q && nginx -s reload") | crontab -
+RUN (/usr/bin/crontab -l && echo "0 0,12 * * * root /opt/certbot/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && /opt/certbot/bin/certbot renew -q && nginx -s reload") | /usr/bin/crontab -
