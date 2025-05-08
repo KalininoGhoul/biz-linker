@@ -111,6 +111,7 @@ return [
     'only_paths' => [
         'api/*',
         'app/*',
+        'broadcasting/auth',
     ],
 
     'ignore_paths' => [
